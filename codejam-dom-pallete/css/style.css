@@ -1,0 +1,51 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+#canvas {
+    margin: 20px;
+    width: 300px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+    border: white solid 2px;
+    background: gray;
+    height: 100px;
+    animation-duration: 5s;
+    animation-name: none;
+    cursor: pointer;
+}
+
+@keyframes color {
+    from {
+        background-color: red;
+    }
+    to {
+        background-color: yellow;
+    }
+}
+
+@keyframes circle {
+    from {
+        border-radius: 100%;
+    }
+    to {
+        border-radius: 50%;
+    }
+}
+
+.highlight {
+    background: red;
+}
