@@ -8,7 +8,7 @@ canvas.addEventListener('click', function (event) {
     if (tool === 'Paint bucket') changeBackground(target);
     if (tool === 'Choose color') chooseColor(target);
     if (tool === 'Move') return;
-    if (tool === 'Transform') return;
+    if (tool === 'Transform') transform(target);
 
 })
 
@@ -34,6 +34,16 @@ tools.addEventListener('click', function (event) {
 })
 
 //Choose color
-function chooseColor(target){
-    alert(`Currect color: ${target.style.background}`)
+function chooseColor(target) {
+    color = target.style.background;
+    alert(`Currect color: ${color}`)
+}
+
+//Transform
+
+function transform(target) {
+    console.log(target.style.borderRadius)
+    if (target.style.borderRadius == '')
+    target.style.borderRadius = '50%';
+    else target.style.borderRadius = '';
 }
