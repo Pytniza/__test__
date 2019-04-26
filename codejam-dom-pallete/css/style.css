@@ -16,9 +16,6 @@
 }
 
 .column {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 100%;
     flex: 1;
     border: white solid 2px;
     background: gray;
@@ -46,6 +43,8 @@
     }
 }
 
-.highlight {
-    background: red;
+#tools, 
+#colors {
+    display: flex;
+    flex-direction: column;
 }
