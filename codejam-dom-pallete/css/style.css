@@ -3,48 +3,37 @@
     justify-content: space-between;
 }
 
-#canvas {
-    margin: 20px;
-    width: 300px;
+#canvas{
+    border: 2px solid black;
+    width: 60%;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
 }
 
-.row {
+#canvas__wrapper {
+    margin: 20px;
+    width: 312px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 100%;
+}
+
+.default{
+    height: 100px;
+    width: 100px;
+    margin: 2px;
 }
 
 .column {
-    flex: 1;
-    border: white solid 2px;
-    background: gray;
-    height: 100px;
-    animation-duration: 5s;
-    animation-name: none;
     cursor: pointer;
 }
 
-@keyframes color {
-    from {
-        background-color: red;
-    }
-    to {
-        background-color: yellow;
-    }
-}
-
-@keyframes circle {
-    from {
-        border-radius: 100%;
-    }
-    to {
-        border-radius: 50%;
-    }
-}
-
-#tools, 
-#colors {
+#tools, #colors {
     display: flex;
     flex-direction: column;
+}
+
+.dashboard {
+    width: 30%
 }
