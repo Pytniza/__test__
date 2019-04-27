@@ -3,11 +3,12 @@
     justify-content: space-between;
 }
 
-#canvas{
+#canvas {
     border: 2px solid black;
     width: 60%;
     height: 400px;
     position: relative;
+    cursor: url(../asserts/images/Paint_bucket.png), auto;
     overflow: hidden;
 }
 
@@ -19,14 +20,10 @@
     flex-wrap: wrap;
 }
 
-.default{
+.default {
     height: 100px;
     width: 100px;
     margin: 2px;
-}
-
-.column {
-    cursor: pointer;
 }
 
 #tools, #colors {
