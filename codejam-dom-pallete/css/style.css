@@ -31,6 +31,10 @@
     flex-direction: column;
 }
 
+#colors {
+    margin-top: 20px;
+}
+
 .dashboard {
     width: 30%
 }

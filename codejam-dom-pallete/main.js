@@ -1,18 +1,31 @@
 window.addEventListener('load', function () {
-    const arr = document.getElementsByClassName('column');
-    for (let i = 0; i < arr.length; i++) {
-        arr[i].id = i;
-    }
-    for (let i = 0; i < arr.length; i++) {
-        arr[i].style.background = 'green';
-
-    }
-
-    let currectColor = 'red';
-    let tool = 'Paint color';
+    'use strict'
     const canvas = document.getElementById('canvas');
-    let firstOpen = true;
-    if (!localStorage.getItem(firstOpen)) firstOpen = localStorage.getItem(firstOpen);
+    console.log(localStorage.getItem('currectColor'))
+    let currectColor = (localStorage.getItem('currectColor')) ? localStorage.getItem('currectColor') : 'red';
+    let tool = (localStorage.getItem('tool')) ? localStorage.getItem('tool') : 'Paint bucket';
+
+    if (tool === 'Paint bucket') canvas.style.cursor = "url(asserts/images/Paint_bucket.png), auto";
+    if (tool === 'Choose color') canvas.style.cursor = "url(asserts/images/Choose_color.png), auto";
+    if (tool === 'Transform') canvas.style.cursor = "url(asserts/images/Transform.png), auto";
+    if (tool === 'Move') {
+        canvas.style.cursor = "url(asserts/images/Move.png), auto";
+    }
+
+    for (let i = 0; i < 9; i++) {
+        const div = document.createElement("div");
+        document.getElementById('canvas__wrapper').appendChild(div);
+        if (localStorage.getItem(i) !== null) {
+            div.style.background = JSON.parse(localStorage.getItem(i)).background;
+        }
+        else { div.style.background = 'green'; }
+        div.id = i;
+        div.className += 'column default'
+    }
+
+
+    //let firstOpen = true;
+    //if (!localStorage.getItem(firstOpen)) firstOpen = localStorage.getItem(firstOpen);
 
     canvas.addEventListener('click', function (event) {
         let target = event.target;
@@ -25,7 +38,17 @@ window.addEventListener('load', function () {
 
     function changeBackground(element) {
         element.style.background = currectColor;
-        localStorage.setItem('id', element.id)
+        if (localStorage.getItem(element.id) == null) {
+            const obj = {
+                background: currectColor
+            }
+            localStorage.setItem(element.id, JSON.stringify(obj))
+        }
+        else {
+            const obj = JSON.parse(localStorage.getItem(element.id));
+            obj.background = currectColor;
+            localStorage.setItem(element.id, JSON.stringify(obj))
+        }
     }
 
     // colors 
@@ -36,6 +59,8 @@ window.addEventListener('load', function () {
         currectColor = target.innerHTML;
         canvas.style.cursor = "url(asserts/images/Paint_bucket.png), auto";
         tool = 'Paint bucket';
+        localStorage.setItem('currectColor', currectColor);
+        localStorage.setItem('tool', tool);
     })
 
     //tools
@@ -44,20 +69,20 @@ window.addEventListener('load', function () {
         let target = event.target;
         if (target.tagName != 'BUTTON') return;
         tool = target.innerHTML;
+        localStorage.setItem('tool', tool);
         if (tool === 'Paint bucket') canvas.style.cursor = "url(asserts/images/Paint_bucket.png), auto";
         if (tool === 'Choose color') canvas.style.cursor = "url(asserts/images/Choose_color.png), auto";
         if (tool === 'Transform') canvas.style.cursor = "url(asserts/images/Transform.png), auto";
         if (tool === 'Move') {
             canvas.style.cursor = "url(asserts/images/Move.png), auto";
             return;
-        }  
+        }
     })
 
     //Choose color
     function chooseColor(target) {
         currectColor = target.style.background;
-        //if (!color) color = 'gray';
-        alert(`Currect color: ${currectColor}`)
+        localStorage.setItem('currectColor', currectColor);
     }
 
     //Transform
