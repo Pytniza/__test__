@@ -20,17 +20,27 @@
         <div class="wrapper">
             <div class="dashboard">
                 <ul id="tools">
-                    <li><button id="Paint bucket"><img src="asserts/images/Paint_bucket.png" alt="Paint bucket">Paint
-                            bucket</button></li>
-                    <li><button id="Choose color"><img src="asserts/images/Choose_color.png" alt="">Choose
-                            color</button></li>
-                    <li><button id="Move"><img src="asserts/images/Move.png" alt="Move">Move</button></li>
-                    <li><button id="Transform"><img src="asserts/images/Transform.png"
-                                alt="Transform">Transform</button></li>
+                    <li>
+                        <button id="Paint bucket">
+                            <img src="asserts/images/Paint_bucket.png" alt="Paint bucket">Paint bucket(P)</button>
+                    </li>
+                    <li>
+                        <button id="Choose color">
+                            <img src="asserts/images/Choose_color.png" alt="">Choose color(C)
+                        </button>
+                    </li>
+                    <li>
+                        <button id="Move">
+                            <img src="asserts/images/Move.png" alt="Move">Move(M)</button></li>
+                    <li>
+                        <button id="Transform">
+                            <img src="asserts/images/Transform.png" alt="Transform">Transform(T)
+                        </button>
+                    </li>
                 </ul>
                 <ul id="colors">
                     <li><button><span id="current"></span>Current color</button></li>
-                    <li><button><span id="prev"></span>Prev color</button></li>
+                    <li><button id = "prevColor"><span id="prev"></span>Prev color</button></li>
                     <li class="palette">
                         <input type="color" value="#ff0000" id="palette">
                         <label for="palette">Custom color</label>
@@ -38,10 +48,8 @@
                 </ul>
             </div>
             <div id="canvas">
-                <div id="canvas__wrapper">
-                </div>
+                <div id="canvas__wrapper"></div>
             </div>
-        </div>
         </div>
     </main>
     <script src="main.js"></script>

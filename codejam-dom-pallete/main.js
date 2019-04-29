@@ -5,8 +5,6 @@ window.addEventListener('load', function () {
     let prevColor = (localStorage.getItem('prevColor')) ? localStorage.getItem('prevColor') : 'white';
     let tool = (localStorage.getItem('tool')) ? localStorage.getItem('tool') : 'Paint bucket';
 
-        console.log(prevColor);
-        //console.log(currentColor);
     if (tool === 'Paint bucket') canvas.style.cursor = 'url(asserts/images/Paint_bucket.png), auto';
     if (tool === 'Choose color') canvas.style.cursor = 'url(asserts/images/Choose_color.png), auto';
     if (tool === 'Transform') canvas.style.cursor = 'url(asserts/images/Transform.png), auto';
@@ -38,6 +36,7 @@ window.addEventListener('load', function () {
             if (JSON.parse(obj.hasOwnProperty('top'))) {
                 const clone = div.cloneNode(true);
                 clone.classList.remove('column');
+                console.log(clone);
                 document.getElementById('canvas__wrapper').appendChild(clone);
 
                 canvas.appendChild(div);
@@ -74,9 +73,10 @@ window.addEventListener('load', function () {
     // colors
     document.getElementById('colors').addEventListener('click', function (event) {
         let target = event.target;
-        if (target.tagName == 'BUTTON') {
+        if (target.id == 'prevColor') {
             canvas.style.cursor = 'url(asserts/images/Paint_bucket.png), auto';
             tool = 'Paint bucket';
+            currentColor = localStorage.getItem('prevColor');
             changeCurrentColor(currentColor);
             // localStorage
             localStorage.setItem('currentColor', currentColor);
@@ -114,7 +114,7 @@ window.addEventListener('load', function () {
         element.style.background = currentColor;
         const obj = JSON.parse(localStorage.getItem(element.id));
         obj.background = currentColor;
-        localStorage.setItem(element.id, JSON.stringify(obj))
+        localStorage.setItem(element.id, JSON.stringify(obj));
     }
 
     //Choose color
@@ -158,7 +158,7 @@ window.addEventListener('load', function () {
             }
             // show moving element
             dragObject.avatar.style.left = e.clientX - (window.innerWidth - canvas.clientWidth) + 'px';
-            dragObject.avatar.style.top = e.clientY - (window.innerHeight - canvas.clientHeight) + 'px';
+            dragObject.avatar.style.top = e.clientY - 98 + 'px';
 
             return false;
         }
@@ -198,8 +198,13 @@ window.addEventListener('load', function () {
             dragObject.elem.style.opacity = '0.5';
 
             avatar.moveElem = function () {
-                dragObject.elem.classList.remove('column');
-                dragObject.elem.style.opacity = '0';
+                console.dir(dragObject.elem.parentNode)
+                if (dragObject.elem.parentNode.id == 'canvas__wrapper'){
+                    dragObject.elem.style.opacity = '0';
+                }
+                else {
+                    dragObject.elem.parentNode.removeChild(dragObject.elem);
+                }
             };
 
             // cancel move
@@ -260,7 +265,7 @@ window.addEventListener('load', function () {
         dropElem.style.background = dragObject.avatar.style.background;
         dropElem.style.borderRadius = dragObject.avatar.style.borderRadius;
 
-        dragObject.avatar.style.display = 'none';
+        dragObject.avatar.parentNode.removeChild(dragObject.avatar);
 
         //localStorage
         const obj1 = JSON.parse(localStorage.getItem(drag.id));
@@ -275,4 +280,27 @@ window.addEventListener('load', function () {
 
     };
 
+    //keyboard
+    document.addEventListener('keydown', function (e) {
+        if (e.keyCode == 80) {
+            canvas.style.cursor = 'url(asserts/images/Paint_bucket.png), auto';
+            tool = 'Paint bucket';
+            localStorage.setItem('tool', tool);
+        }
+        if (e.keyCode == 67) {
+            canvas.style.cursor = 'url(asserts/images/Choose_color.png), auto';
+            tool = 'Choose color';
+            localStorage.setItem('tool', tool);
+        }
+        if (e.keyCode == 84) {
+            canvas.style.cursor = 'url(asserts/images/Transform.png), auto';
+            tool = 'Transform';
+            localStorage.setItem('tool', tool);
+        }
+        if (e.keyCode == 77) {
+            canvas.style.cursor = 'url(asserts/images/Move.png), auto';
+            tool = 'Move';
+            localStorage.setItem('tool', tool);
+        }
+    })
 })
