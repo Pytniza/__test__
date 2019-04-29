@@ -5,32 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pallete</title>
+    <title>CodeJam | Pallete</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="dashboard">
-            <div id="tools">
-                <button>Paint bucket</button>
-                <button>Choose color</button>
-                <button>Move</button>
-                <button>Transform</button>
+    <header>
+        <button><img src="asserts/images/Shape.png" alt=""></button>
+        <h1>CodeJam - Pallete</h1>
+        <button><img src="asserts/images/Shap.png" alt=""></button>
+    </header>
+    <main>
+        <div class="wrapper">
+            <div class="dashboard">
+                <ul id="tools">
+                    <li><button id="Paint bucket"><img src="asserts/images/Paint_bucket.png" alt="Paint bucket">Paint
+                            bucket</button></li>
+                    <li><button id="Choose color"><img src="asserts/images/Choose_color.png" alt="">Choose
+                            color</button></li>
+                    <li><button id="Move"><img src="asserts/images/Move.png" alt="Move">Move</button></li>
+                    <li><button id="Transform"><img src="asserts/images/Transform.png"
+                                alt="Transform">Transform</button></li>
+                </ul>
+                <ul id="colors">
+                    <li><button>Current color</button></li>
+                    <li><button>Prev color</button></li>
+                    <li><button>gray</button></li>
+                    <li><button>blue</button></li>
+                </ul>
             </div>
-            <div id="colors">
-                <button>green</button>
-                <button>red</button>
-                <button>gray</button>
-                <button>blue</button>
-            </div>
-        </div>
-        <div id="canvas">
-            <div id="canvas__wrapper">
+            <div id="canvas">
+                <div id="canvas__wrapper">
                 </div>
             </div>
         </div>
-    </div>
+        </div>
+    </main>
     <script src="main.js"></script>
 </body>
 

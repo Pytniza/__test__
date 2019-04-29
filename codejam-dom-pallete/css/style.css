@@ -1,6 +1,26 @@
+ul, ul {
+    list-style: none
+}
+
+header {
+    display: flex;
+    width: 100%;
+    box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+header button {
+    background: inherit;
+    border: none;
+}
+
+header button:last-child{
+    margin-left: auto;
+}
+
 .wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    padding-top: 20px;
 }
 
 #canvas {
@@ -28,10 +48,18 @@
 #tools, #colors {
     display: flex;
     flex-direction: column;
+    box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.75);
+}
+
+#tools button, #colors button{
+    width: 80%;
+    text-align: left;
+    background: inherit;
+    border: none;
 }
 
 #colors {
-    margin-top: 20px;
+    margin-top: 100px;
 }
 
 .dashboard {
