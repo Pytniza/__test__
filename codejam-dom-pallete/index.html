@@ -29,10 +29,12 @@
                                 alt="Transform">Transform</button></li>
                 </ul>
                 <ul id="colors">
-                    <li><button>Current color</button></li>
-                    <li><button>Prev color</button></li>
-                    <li><button>gray</button></li>
-                    <li><button>blue</button></li>
+                    <li><button><span id="current"></span>Current color</button></li>
+                    <li><button><span id="prev"></span>Prev color</button></li>
+                    <li class="palette">
+                        <input type="color" value="#ff0000" id="palette">
+                        <label for="palette">Custom color</label>
+                    </li>
                 </ul>
             </div>
             <div id="canvas">

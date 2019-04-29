@@ -11,6 +11,7 @@ header {
 header button {
     background: inherit;
     border: none;
+    cursor: pointer;
 }
 
 header button:last-child{
@@ -24,11 +25,11 @@ header button:last-child{
 }
 
 #canvas {
-    border: 2px solid black;
     width: 60%;
     height: 400px;
     position: relative;
     overflow: hidden;
+    box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.75);
 }
 
 #canvas__wrapper {
@@ -49,17 +50,50 @@ header button:last-child{
     display: flex;
     flex-direction: column;
     box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.75);
+    padding: 30px;
 }
 
 #tools button, #colors button{
-    width: 80%;
+    width: 100%;
     text-align: left;
     background: inherit;
     border: none;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+#tools button:hover, #colors button:hover {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-top: -1px;
+    margin-bottom: -1px;
 }
 
 #colors {
-    margin-top: 100px;
+    margin-top: 50px;
+}
+
+#colors span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid gray;
+}
+
+.palette {
+    background: #dddddd;
+    width: 30%;
+    border: 1px solid gray;
+    margin-top: 10px;
+}
+
+.palette label{
+    cursor: pointer;
+}
+
+.palette input{
+    display: none;
 }
 
 .dashboard {
