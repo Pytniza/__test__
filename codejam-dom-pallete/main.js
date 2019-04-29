@@ -1,7 +1,6 @@
 window.addEventListener('load', function () {
     'use strict'
     const canvas = document.getElementById('canvas');
-    console.log(localStorage.getItem('currectColor'))
     let currectColor = (localStorage.getItem('currectColor')) ? localStorage.getItem('currectColor') : 'red';
     let tool = (localStorage.getItem('tool')) ? localStorage.getItem('tool') : 'Paint bucket';
 
@@ -11,21 +10,40 @@ window.addEventListener('load', function () {
     if (tool === 'Move') {
         canvas.style.cursor = "url(asserts/images/Move.png), auto";
     }
-
+    //add elements
     for (let i = 0; i < 9; i++) {
         const div = document.createElement("div");
-        document.getElementById('canvas__wrapper').appendChild(div);
-        if (localStorage.getItem(i) !== null) {
-            div.style.background = JSON.parse(localStorage.getItem(i)).background;
-        }
-        else { div.style.background = 'green'; }
+        const obj = JSON.parse(localStorage.getItem(i));
         div.id = i;
-        div.className += 'column default'
+        div.className += 'column default';
+        if (obj) {
+            if (JSON.parse(obj.hasOwnProperty('top'))) {
+                const clone = div.cloneNode(true);
+                clone.classList.remove('column');
+                document.getElementById('canvas__wrapper').appendChild(clone);
+
+                canvas.appendChild(div);
+                div.style.position = 'absolute';
+                div.style.top = obj.top;
+                div.style.left = obj.left;
+            }
+            else {
+                document.getElementById('canvas__wrapper').appendChild(div);
+            }
+            div.style.background = JSON.parse(localStorage.getItem(i)).background;
+            div.style.borderRadius = JSON.parse(localStorage.getItem(i)).borderRadius;
+            console.log(JSON.parse(obj.hasOwnProperty('top')));
+        }
+        else {
+            document.getElementById('canvas__wrapper').appendChild(div);
+            div.style.background = 'green';
+            const obj = {
+                background: "green",
+                borderRadius: ''
+            }
+            localStorage.setItem(i, JSON.stringify(obj))
+        }
     }
-
-
-    //let firstOpen = true;
-    //if (!localStorage.getItem(firstOpen)) firstOpen = localStorage.getItem(firstOpen);
 
     canvas.addEventListener('click', function (event) {
         let target = event.target;
@@ -36,21 +54,6 @@ window.addEventListener('load', function () {
         if (tool === 'Move') return;
     })
 
-    function changeBackground(element) {
-        element.style.background = currectColor;
-        if (localStorage.getItem(element.id) == null) {
-            const obj = {
-                background: currectColor
-            }
-            localStorage.setItem(element.id, JSON.stringify(obj))
-        }
-        else {
-            const obj = JSON.parse(localStorage.getItem(element.id));
-            obj.background = currectColor;
-            localStorage.setItem(element.id, JSON.stringify(obj))
-        }
-    }
-
     // colors 
     const colors = document.getElementById('colors')
     colors.addEventListener('click', function (event) {
@@ -59,6 +62,7 @@ window.addEventListener('load', function () {
         currectColor = target.innerHTML;
         canvas.style.cursor = "url(asserts/images/Paint_bucket.png), auto";
         tool = 'Paint bucket';
+        // localStorage
         localStorage.setItem('currectColor', currectColor);
         localStorage.setItem('tool', tool);
     })
@@ -79,22 +83,33 @@ window.addEventListener('load', function () {
         }
     })
 
+    //Paint bucket
+    function changeBackground(element) {
+        element.style.background = currectColor;
+        const obj = JSON.parse(localStorage.getItem(element.id));
+        obj.background = currectColor;
+        localStorage.setItem(element.id, JSON.stringify(obj))
+    }
+
     //Choose color
     function chooseColor(target) {
         currectColor = target.style.background;
+        // localStorage
         localStorage.setItem('currectColor', currectColor);
     }
 
     //Transform
-
     function transform(target) {
         if (target.style.borderRadius == '')
             target.style.borderRadius = '50%';
         else target.style.borderRadius = '';
+        // localStorage
+        const obj = JSON.parse(localStorage.getItem(target.id));
+        obj.borderRadius = target.style.borderRadius;
+        localStorage.setItem(target.id, JSON.stringify(obj));
     }
 
     //Move
-
     const DragManager = new function () {
         let dragObject = {};
         const self = this;
@@ -137,13 +152,20 @@ window.addEventListener('load', function () {
             }
             else if (dropElem == 'move') {
                 self.onDragMove(dragObject);
+
+                // localStorage
+                const avatar = dragObject.avatar;
+                const obj = JSON.parse(localStorage.getItem(avatar.id));
+                obj.top = avatar.style.top;
+                obj.left = avatar.style.left;
+                localStorage.setItem(avatar.id, JSON.stringify(obj))
             }
             else {
                 self.onDragEnd(dragObject, dropElem);
             }
         }
 
-        function createAvatar(e) {
+        function createAvatar() {
             let avatar = dragObject.elem.cloneNode(true);
             canvas.appendChild(avatar);
             dragObject.elem.style.opacity = '0.5';
@@ -162,7 +184,7 @@ window.addEventListener('load', function () {
             return avatar;
         }
 
-        function startDrag(e) {
+        function startDrag() {
             let avatar = dragObject.avatar;
             avatar.style.zIndex = 9999;
             avatar.style.position = 'absolute';
@@ -191,7 +213,7 @@ window.addEventListener('load', function () {
         document.onmouseup = onMouseUp;
         document.onmousedown = onMouseDown;
 
-        this.onDragEnd = function (dragObject, dropElem) { };
+        this.onDragEnd = function () { };
     };
 
     DragManager.onDragCancel = function (dragObject) {
@@ -203,14 +225,26 @@ window.addEventListener('load', function () {
     };
 
     DragManager.onDragEnd = function (dragObject, dropElem) {
-        dragObject.elem.style.background = dropElem.style.background;
-        dragObject.elem.style.borderRadius = dropElem.style.borderRadius;
-        dragObject.elem.style.opacity = '';
+        const drag = dragObject.elem;
+        drag.style.background = dropElem.style.background;
+        drag.style.borderRadius = dropElem.style.borderRadius;
+        drag.style.opacity = '';
 
         dropElem.style.background = dragObject.avatar.style.background;
         dropElem.style.borderRadius = dragObject.avatar.style.borderRadius;
 
         dragObject.avatar.style.display = 'none';
+        
+        //localStorage
+        const obj1 = JSON.parse(localStorage.getItem(drag.id));
+        obj1.background = drag.style.background;
+        obj1.borderRadius = drag.style.borderRadius;
+        localStorage.setItem(drag.id, JSON.stringify(obj1))
+
+        const obj = JSON.parse(localStorage.getItem(dropElem.id));
+        obj.background = dropElem.style.background;
+        obj.borderRadius = dropElem.style.borderRadius;
+        localStorage.setItem(dropElem.id, JSON.stringify(obj))
 
     };
 
